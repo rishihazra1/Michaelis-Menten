@@ -33,6 +33,7 @@ for i in range(0, len(trialConcentrations) - 1):
         print("Select file with data for Trial " + str(m) + " at " + trialConcentrations[i] + " µM.\n")
         path = tkinter.filedialog.askopenfilename()
         print(path)
-        FileInterpretation.getStart(path, startTime)
-        FileInterpretation.getEnd(path, endTime)
+        startValue = FileInterpretation.getStart(path, startTime)
+        endValue = FileInterpretation.getEnd(path, endTime)
+        FileInterpretation.findVelocity(startValue, startTime, endValue, endTime, molarExtinction)
         m += 1
