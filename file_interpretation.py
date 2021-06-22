@@ -15,17 +15,18 @@ def get_absorption(csv_file, time_stamp):
         csv_reader = csv.reader(current_file, delimiter=',')
         line_count = 0
         for row in csv_reader:
-            if line_count == 26 + startTime:
+            if line_count == 26 + time_stamp:
                 instantaneous_absorption = row[1]
-                print(instantaneous_absorption)
+                print("(time (sec), absorption): " + "(" + str(time_stamp) + "," + str(instantaneous_absorption) + ")")
                 break
             line_count += 1
         line_count = 0
     return float(instantaneous_absorption)
 
+
 def find_velocity(start_value, start_time, end_value, end_time, enzyme_concentration, molar_extinction):
     slope = (end_value - start_value) / (end_time - start_time + 1)
-    print(slope)
+    print("slope: " + str(slope))
     velocity = (slope * 60) / (enzyme_concentration * molar_extinction)
-    print(velocity)
+    print("velocity: " + str(velocity))
     return float(velocity)

@@ -30,7 +30,7 @@ while n < len(trialConcentrations):
 
 print(numberOfTrials)
 
-for i in range(0, len(trialConcentrations) - 1):
+for i in range(0, len(trialConcentrations)):
     m = 1
     while m < numberOfTrials[i] + 1:
         print("Select file with data for Trial " + str(m) + " at " + trialConcentrations[i] + " µM.\n")
