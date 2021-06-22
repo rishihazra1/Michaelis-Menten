@@ -1,12 +1,15 @@
 import fileinput
 import tkinter.filedialog
-import FileInterpretation
+import file_interpretation
 
 startTime = 0
 endTime = 20
 
 print("Enter molar extinction coefficient of your substrate.")
 molarExtinction = float(input())
+
+print("Enter concentration of your enzyme (in µM).")
+enzymeConcentration = float(input())
 
 print("How many concentrations did you run trials for?")
 concentrationsRun = int(input())
@@ -33,7 +36,7 @@ for i in range(0, len(trialConcentrations) - 1):
         print("Select file with data for Trial " + str(m) + " at " + trialConcentrations[i] + " µM.\n")
         path = tkinter.filedialog.askopenfilename()
         print(path)
-        startValue = FileInterpretation.getStart(path, startTime)
-        endValue = FileInterpretation.getEnd(path, endTime)
-        FileInterpretation.findVelocity(startValue, startTime, endValue, endTime, molarExtinction)
+        startValue = file_interpretation.get_absorption(path, startTime)
+        endValue = file_interpretation.get_absorption(path, endTime)
+        file_interpretation.find_velocity(startValue, startTime, endValue, endTime, enzymeConcentration, molarExtinction)
         m += 1
