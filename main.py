@@ -16,9 +16,18 @@ while t < concentrationsRun:
 
 print(trialConcentrations)
 n = 0
+
+
+
+
+
+
+
+
+
 while n < concentrationsRun:
     truncationTimes = []
-    print("Enter your desired start time and end time in seconds (pressing enter between each time) for your " + trialConcentrations[n] + " µM trials.")
+    print("Enter your desired start time and end time in seconds (pressing enter between 8each time) for your " + trialConcentrations[n] + " µM trials.")
     while len(truncationTimes) < 2:
         truncationTimes.append(input())
     print("Select the folder containing your data at " + trialConcentrations[n] + " µM")
