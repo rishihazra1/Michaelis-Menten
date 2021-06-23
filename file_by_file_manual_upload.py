@@ -5,8 +5,8 @@ import matplotlib.pyplot as plt
 
 import file_interpretation
 
-startTime = 0
-endTime = 20
+startTime = 20
+endTime = 40
 
 print("Enter molar extinction coefficient of your substrate.")
 molar_extinction = float(input())
