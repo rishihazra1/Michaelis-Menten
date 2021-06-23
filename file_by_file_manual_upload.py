@@ -1,42 +1,62 @@
 import fileinput
 import tkinter.filedialog
+import matplotlib.pyplot as plt
+
 import file_interpretation
 
 startTime = 0
 endTime = 20
 
 print("Enter molar extinction coefficient of your substrate.")
-molarExtinction = float(input())
+molar_extinction = float(input())
 
 print("Enter concentration of your enzyme (in µM).")
-enzymeConcentration = float(input())
+enzyme_concentration = float(input())
 
 print("How many concentrations did you run trials for?")
-concentrationsRun = int(input())
+concentrations_run = int(input())
 print("Enter the concentrations (in µM) at which you ran trials.")
-trialConcentrations = []
+trial_concentrations = []
 t = 0
-while t < concentrationsRun:
-    trialConcentrations.append(input())
+while t < concentrations_run:
+    trial_concentrations.append(input())
     t += 1
 
-print(trialConcentrations)
+print(trial_concentrations)
 
-numberOfTrials = []
+number_of_trials = []
 n = 0
-while n < len(trialConcentrations):
-    numberOfTrials.append(int(input("How many trials did you run at the " + trialConcentrations[n] + " µM\n")))
+while n < len(trial_concentrations):
+    number_of_trials.append(int(input("How many trials did you run at the " + trial_concentrations[n] + " µM\n")))
     n += 1
 
-print(numberOfTrials)
+print(number_of_trials)
 
-for i in range(0, len(trialConcentrations)):
+average_velocities = []
+
+for i in range(0, len(trial_concentrations)):
+    temp_value_holder = []  # stores individual trial values per concentration; resets each iteration
     m = 1
-    while m < numberOfTrials[i] + 1:
-        print("Select file with data for Trial " + str(m) + " at " + trialConcentrations[i] + " µM.\n")
+    while m < number_of_trials[i] + 1:
+        print("Select file with data for Trial " + str(m) + " at " + trial_concentrations[i] + " µM.\n")
         path = tkinter.filedialog.askopenfilename()
         print(path)
-        startValue = file_interpretation.get_absorption(path, startTime)
-        endValue = file_interpretation.get_absorption(path, endTime)
-        file_interpretation.find_velocity(startValue, startTime, endValue, endTime, enzymeConcentration, molarExtinction)
+        start_value = file_interpretation.get_absorption(path, startTime)
+        end_value = file_interpretation.get_absorption(path, endTime)
+        velocity = file_interpretation.find_velocity(start_value, startTime, end_value, endTime, enzyme_concentration,
+                                                     molar_extinction)
+        temp_value_holder.append(velocity)
+        print("velocities: " + str(temp_value_holder))
         m += 1
+    index = 0
+    velocity_sum = 0
+    print("m = " + str(m))
+    for index in range(0, m - 1):
+        velocity_sum += temp_value_holder[index]
+    concentration_velocity_average = velocity_sum / (m - 1)
+    average_velocities.append(concentration_velocity_average)
+print("Average Velocities: " + str(average_velocities))
+
+x = trial_concentrations
+y = average_velocities
+plt.plot(x, y)

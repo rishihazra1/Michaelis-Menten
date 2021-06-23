@@ -26,7 +26,5 @@ def get_absorption(csv_file, time_stamp):
 
 def find_velocity(start_value, start_time, end_value, end_time, enzyme_concentration, molar_extinction):
     slope = (end_value - start_value) / (end_time - start_time + 1)
-    print("slope: " + str(slope))
     velocity = (slope * 60) / (enzyme_concentration * molar_extinction)
-    print("velocity: " + str(velocity))
     return float(velocity)
