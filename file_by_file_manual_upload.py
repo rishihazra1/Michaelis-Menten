@@ -1,5 +1,6 @@
 import fileinput
 import tkinter.filedialog
+import math
 import matplotlib.pyplot as plt
 
 import file_interpretation
@@ -43,8 +44,9 @@ for i in range(0, len(trial_concentrations)):
         print(path)
         start_value = file_interpretation.get_absorption(path, startTime)
         end_value = file_interpretation.get_absorption(path, endTime)
-        velocity = file_interpretation.find_velocity(start_value, startTime, end_value, endTime, enzyme_concentration,
-                                                     molar_extinction)
+        velocity = abs(
+            file_interpretation.find_velocity(start_value, startTime, end_value, endTime, enzyme_concentration,
+                                              molar_extinction))
         temp_value_holder.append(velocity)
         print("velocities: " + str(temp_value_holder))
         m += 1
@@ -57,6 +59,5 @@ for i in range(0, len(trial_concentrations)):
     average_velocities.append(concentration_velocity_average)
 print("Average Velocities: " + str(average_velocities))
 
-x = trial_concentrations
-y = average_velocities
-plt.plot(x, y)
+plt.scatter(trial_concentrations, average_velocities)
+plt.show()
