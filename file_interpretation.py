@@ -1,4 +1,5 @@
 import csv
+import numpy
 import math
 import fileinput
 import tkinter.filedialog
@@ -30,13 +31,19 @@ def get_x_values(csv_file):
         csv_reader = csv.reader(current_file, delimiter=',')
         line_count = 0
         for row in csv_reader:
-            if get_absorption(csv_file, )line_count == 26 + time_stamp:
-                instantaneous_absorption = row[1]
-                print("(time (sec), absorption): " + "(" + str(time_stamp) + "," + str(instantaneous_absorption) + ")")
+            if row[0] == "HH:MM:SS":
+                zero_index = line_count + 1  # identifying data start location
+                print("zero-index: " + str(zero_index))
+            if row[0] == "ID#":
+                end_index = line_count - 2
+                print("end-index: " + str(end_index))
                 break
             line_count += 1
-        line_count = 0
-    return float(instantaneous_absorption)
+    trial_duration = end_index - zero_index
+    for time in range(0, trial_duration + 1):
+        x_values.append(get_absorption(csv_file, time))
+    print(x_values)
+    return x_values
 
 
 def find_velocity(start_value, start_time, end_value, end_time, enzyme_concentration, molar_extinction):

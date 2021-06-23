@@ -3,7 +3,8 @@ import file_interpretation
 
 start_time = int()
 end_time = int()
-user_input_concentrations = []
+
+def produce_scatter_plot(start_time, end_time):
 
 
 def plot_single_file(file, start, end, concentrations):
