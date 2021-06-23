@@ -31,6 +31,7 @@ while n < len(trial_concentrations):
 print(number_of_trials)
 
 average_velocities = []
+x_values = []
 
 for i in range(0, len(trial_concentrations)):
     temp_value_holder = []  # stores individual trial values per concentration; resets each iteration
@@ -40,8 +41,11 @@ for i in range(0, len(trial_concentrations)):
         path = tkinter.filedialog.askopenfilename()
         print(path)
         file_interpretation.read_file(path)
-        start_value = file_interpretation.get_absorption(path, startTime)
-        end_value = file_interpretation.get_absorption(path, endTime)
+        x_values = file_interpretation.get_x_values(path)
+        start_value = x_values[startTime]
+        end_value = x_values[endTime]
+        print(start_value)
+        print(end_value)
         velocity = abs(
             file_interpretation.find_velocity(start_value, startTime, end_value, endTime, enzyme_concentration,
                                               molar_extinction))
