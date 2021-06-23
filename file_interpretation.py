@@ -23,11 +23,33 @@ def read_file(csv_file):
                 second_column.append("NULL")
             else:
                 first_column.append(rows[index][0])
-            if len(rows[
-                       index]) >= 2:  # only concerned with first two columns, can use while loop to read remaining columns
+            if len(rows[index]) >= 2:  # only concerned with first two columns, can use while loop to read remaining columns
                 second_column.append(rows[index][1])
+            else:
+                second_column.append("NULL")
             index += 1
-    return rows, first_column, second_column
+    print(first_column)
+    print(second_column)
+    return first_column, second_column
+
+
+def get_x_values(csv_file):
+    time_stamps, absorption_values = read_file(csv_file)
+    print(time_stamps)
+    print(absorption_values)
+    for index in range(0, len(time_stamps)):
+        if time_stamps[index] == "HH:MM:SS":
+            zero_index = index + 1 # identifying data start location
+            print("zero-index: " + str(zero_index))
+        if time_stamps[index] == "ID#":
+            end_index = index - 2
+            print("end-index: " + str(end_index))
+            break
+    trial_duration = end_index - zero_index
+    for time in range(zero_index, end_index + 1):
+        x_values.append(absorption_values[index])
+    print(x_values)
+    return x_values
 
 
 def get_absorption(csv_file, time_stamp):
@@ -42,26 +64,6 @@ def get_absorption(csv_file, time_stamp):
             line_count += 1
             line_count = 0
     return instantaneous_absorption
-
-
-def get_x_values(csv_file):
-    with open(csv_file) as current_file:
-        csv_reader = csv.reader(current_file, delimiter=',')
-        line_count = 0
-        for row in csv_reader:
-            if row[0] == "HH:MM:SS":
-                zero_index = line_count + 1  # identifying data start location
-                print("zero-index: " + str(zero_index))
-            if row[0] == "ID#":
-                end_index = line_count - 2
-                print("end-index: " + str(end_index))
-                break
-            line_count += 1
-    trial_duration = end_index - zero_index
-    for time in range(0, trial_duration + 1):
-        x_values.append(get_absorption(csv_file, time))
-    print(x_values)
-    return x_values
 
 
 def find_velocity(start_value, start_time, end_value, end_time, enzyme_concentration, molar_extinction):
