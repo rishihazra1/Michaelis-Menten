@@ -10,6 +10,17 @@ startValue = float()
 endValue = float()
 molarExtinction = float()
 x_values = []
+rows = []
+
+
+def read_file(csv_file):
+    with open(csv_file) as current_file:
+        csv_reader = csv.reader(current_file, delimiter=',')
+        for row in csv_reader:
+            rows.append(row)
+    print(rows)
+    print(row[1])
+    return rows
 
 
 def get_absorption(csv_file, time_stamp):
@@ -22,7 +33,7 @@ def get_absorption(csv_file, time_stamp):
                 print("(time (sec), absorption): " + "(" + str(time_stamp) + "," + str(instantaneous_absorption) + ")")
                 break
             line_count += 1
-        line_count = 0
+            line_count = 0
     return float(instantaneous_absorption)
 
 
