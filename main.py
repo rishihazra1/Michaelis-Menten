@@ -2,8 +2,8 @@ import tkinter.filedialog
 import matplotlib.pyplot as plt
 import file_interpretation
 
-startTime = 20
-endTime = 40
+start_time = 0
+end_time = 45
 
 print("Enter molar extinction coefficient of your substrate.")
 molar_extinction = float(input())
@@ -42,12 +42,10 @@ for i in range(0, len(trial_concentrations)):
         print(path)
         file_interpretation.read_file(path)
         x_values = file_interpretation.get_x_values(path)
-        start_value = x_values[startTime]
-        end_value = x_values[endTime]
-        print(start_value)
-        print(end_value)
+        start_value = x_values[0]
+        end_value = x_values[len(x_values) - 1]
         velocity = abs(
-            file_interpretation.find_velocity(start_value, startTime, end_value, endTime, enzyme_concentration,
+            file_interpretation.find_velocity(start_value, start_time, end_value, end_time, enzyme_concentration,
                                               molar_extinction))
         temp_value_holder.append(velocity)
         print("velocities: " + str(temp_value_holder))

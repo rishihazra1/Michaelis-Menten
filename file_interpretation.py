@@ -16,12 +16,12 @@ def read_file(csv_file):
             if len(rows[index]) == 0:
                 first_column.append("NULL")
                 second_column.append("NULL")
-            else:
+            if len(rows[index]) == 1:
                 first_column.append(rows[index][0])
-            if len(rows[index]) >= 2:  # only concerned with first two columns, can use while loop to read remaining columns
-                second_column.append(rows[index][1])
-            else:
                 second_column.append("NULL")
+            if len(rows[index]) >= 2:
+                first_column.append(rows[index][0])
+                second_column.append(rows[index][1])
             index += 1
     return first_column, second_column
 
@@ -30,15 +30,12 @@ def get_x_values(csv_file):
     time_stamps, absorption_values = read_file(csv_file)
     for index in range(0, len(time_stamps)):
         if time_stamps[index] == "HH:MM:SS":
-            zero_index = index + 2 # identifying data start location
-            print(zero_index)
+            zero_index = index + 1    # identifying desired data start location
         if time_stamps[index] == "ID#":
-            end_index = index - 1
-            print(end_index)
+            end_index = index - 2
             break
     for time in range(zero_index, end_index + 1):
         x_values.append(absorption_values[time])
-    print(x_values)
     return x_values
 
 
@@ -57,6 +54,6 @@ def get_absorption(csv_file, time_stamp):
 
 
 def find_velocity(start_value, start_time, end_value, end_time, enzyme_concentration, molar_extinction):
-    slope = (float(end_value) - float(start_value)) / (int(end_time) - int(start_time) + 1)
+    slope = (float(end_value) - float(start_value)) / (int(end_time) - int(start_time))
     velocity = (slope * 60) / (float(enzyme_concentration) * float(molar_extinction))
     return velocity
