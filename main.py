@@ -42,7 +42,6 @@ for i in range(0, len(trial_concentrations)):
         print(path)
         first_column, second_column = file_interpretation.read_file(path)
         x_values = file_interpretation.initialize_array(first_column, second_column)
-        print("length of x_values: " + str(len(x_values)))
         start_value = file_interpretation.get_absorption(x_values, start_time)
         end_value = file_interpretation.get_absorption(x_values, end_time)
         velocity = abs(
@@ -53,7 +52,7 @@ for i in range(0, len(trial_concentrations)):
         m += 1
     index = 0
     velocity_sum = 0
-    print("m = " + str(m))
+#    print("m = " + str(m))
     for index in range(0, m - 1):
         velocity_sum += temp_value_holder[index]
     concentration_velocity_average = velocity_sum / (m - 1)
