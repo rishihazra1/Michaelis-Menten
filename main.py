@@ -2,8 +2,8 @@ import tkinter.filedialog
 import matplotlib.pyplot as plt
 import file_interpretation
 
-startTime = 0
-endTime = 20
+startTime = 20
+endTime = 40
 
 print("Enter molar extinction coefficient of your substrate.")
 molar_extinction = float(input())
@@ -13,7 +13,7 @@ enzyme_concentration = float(input())
 
 print("How many concentrations did you run trials for?")
 concentrations_run = int(input())
-print("Enter the concentrations (in µM) at which you ran trials.")
+print("Enter the concentrations (in µM) at which you ran trials. Press enter after each value.")
 trial_concentrations = []
 t = 0
 while t < concentrations_run:

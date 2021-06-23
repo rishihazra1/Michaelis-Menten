@@ -1,8 +1,4 @@
 import csv
-import numpy
-import math
-import fileinput
-import tkinter.filedialog
 
 startTime = int()
 endTime = int()
@@ -11,6 +7,8 @@ endValue = float()
 molarExtinction = float()
 x_values = []
 rows = []
+first_column = []
+second_column = []
 
 
 def read_file(csv_file):
@@ -18,9 +16,18 @@ def read_file(csv_file):
         csv_reader = csv.reader(current_file, delimiter=',')
         for row in csv_reader:
             rows.append(row)
-    print(rows)
-    print(row[1])
-    return rows
+        index = 0
+        while index < len(rows):
+            if len(rows[index]) == 0:
+                first_column.append("NULL")
+                second_column.append("NULL")
+            else:
+                first_column.append(rows[index][0])
+            if len(rows[
+                       index]) >= 2:  # only concerned with first two columns, can use while loop to read remaining columns
+                second_column.append(rows[index][1])
+            index += 1
+    return rows, first_column, second_column
 
 
 def get_absorption(csv_file, time_stamp):
@@ -34,7 +41,7 @@ def get_absorption(csv_file, time_stamp):
                 break
             line_count += 1
             line_count = 0
-    return float(instantaneous_absorption)
+    return instantaneous_absorption
 
 
 def get_x_values(csv_file):
