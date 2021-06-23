@@ -40,10 +40,11 @@ for i in range(0, len(trial_concentrations)):
         print("Select file with data for Trial " + str(m) + " at " + trial_concentrations[i] + " µM.\n")
         path = tkinter.filedialog.askopenfilename()
         print(path)
-        file_interpretation.read_file(path)
-        x_values = file_interpretation.get_x_values(path)
-        start_value = x_values[0]
-        end_value = x_values[len(x_values) - 1]
+        first_column, second_column = file_interpretation.read_file(path)
+        x_values = file_interpretation.initialize_array(first_column, second_column)
+        print("length of x_values: " + str(len(x_values)))
+        start_value = file_interpretation.get_absorption(x_values, start_time)
+        end_value = file_interpretation.get_absorption(x_values, end_time)
         velocity = abs(
             file_interpretation.find_velocity(start_value, start_time, end_value, end_time, enzyme_concentration,
                                               molar_extinction))

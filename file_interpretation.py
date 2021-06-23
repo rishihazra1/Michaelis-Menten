@@ -1,6 +1,7 @@
 import csv
 
-x_values = []
+data_points = []
+absorption_values = []
 rows = []
 first_column = []
 second_column = []
@@ -26,30 +27,32 @@ def read_file(csv_file):
     return first_column, second_column
 
 
-def get_x_values(csv_file):
-    time_stamps, absorption_values = read_file(csv_file)
-    for index in range(0, len(time_stamps)):
-        if time_stamps[index] == "HH:MM:SS":
+def initialize_array(time_column, absorption_column):
+    for index in range(0, len(time_column)):
+        if time_column[index] == "HH:MM:SS":
             zero_index = index + 1    # identifying desired data start location
-        if time_stamps[index] == "ID#":
+        if time_column[index] == "ID#":
             end_index = index - 2
             break
     for time in range(zero_index, end_index + 1):
-        x_values.append(absorption_values[time])
-    return x_values
+        data_points.append(absorption_column[time])
+    print(data_points)
+    print(len(data_points))
+    return data_points
 
 
-def get_absorption(csv_file, time_stamp):
-    with open(csv_file) as current_file:
-        csv_reader = csv.reader(current_file, delimiter=',')
-        line_count = 0
-        for row in csv_reader:
-            if line_count == 26 + time_stamp:
-                instantaneous_absorption = row[1]
-                print("(time (sec), absorption): " + "(" + str(time_stamp) + "," + str(instantaneous_absorption) + ")")
-                break
-            line_count += 1
-            line_count = 0
+def get_absorption(data_array, time_stamp):
+    index_valid = False
+    while index_valid is False:
+        try:
+            instantaneous_absorption = data_array[time_stamp]
+            index_valid = True
+        except IndexError:
+            print("Index Error. Data point(s) are missing in given file. Final time will be truncated by 1 second.")
+            index_valid = False
+            time_stamp -= 1
+
+    print("(time (sec), absorption): " + "(" + str(time_stamp) + "," + str(instantaneous_absorption) + ")")
     return instantaneous_absorption
 
 
