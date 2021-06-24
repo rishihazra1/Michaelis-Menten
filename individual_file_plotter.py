@@ -1,7 +1,7 @@
-import absorption_plotter
-import file_interpretation
+import graph_functions
+import file_interpreter
 
 print("Select the file you wish to plot.")
-path = file_interpretation.request_file()
-absorption_plotter.plot_single_file(path)
+path = file_interpreter.request_file()
+graph_functions.plot_single_file(path)
 
