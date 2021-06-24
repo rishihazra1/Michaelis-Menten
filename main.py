@@ -36,30 +36,21 @@ for i in range(0, len(trial_concentrations)):
     temp_value_holder = []  # stores individual trial values per concentration; resets each iteration
     m = 1
     while m < number_of_trials[i] + 1:
-
         print("Select file with data for Trial " + str(m) + " at " + trial_concentrations[i] + " µM.\n")
         path = tkinter.filedialog.askopenfilename()
         print(path)
         first_column, second_column = file_interpretation.read_file(path)
-        print("second column: " + str(second_column))
         x_values = file_interpretation.initialize_array(first_column, second_column)
         start_value = file_interpretation.get_absorption(x_values, start_time)
         end_value = file_interpretation.get_absorption(x_values, end_time)
-        x_values = x_values.clear()
-        first_column = first_column.clear()
-        second_column = second_column.clear()
-        print("after clearing: " + str(second_column))
-        print("cleaned list: " + str(x_values))
         velocity = abs(
             file_interpretation.find_velocity(start_value, start_time, end_value, end_time, enzyme_concentration,
                                               molar_extinction))
-        print(velocity)
         temp_value_holder.append(velocity)
         print("velocities: " + str(temp_value_holder))
         m += 1
     index = 0
     velocity_sum = 0
-#    print("m = " + str(m))
     for index in range(0, m - 1):
         velocity_sum += temp_value_holder[index]
     concentration_velocity_average = velocity_sum / (m - 1)
