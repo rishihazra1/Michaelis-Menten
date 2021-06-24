@@ -1,5 +1,7 @@
 import matplotlib.pyplot as plt
 import file_interpretation
+import numpy as np
+from sklearn.linear_model import LinearRegression
 
 
 def plot_single_file(file):
@@ -17,7 +19,7 @@ def plot_single_file(file):
     index = start
     while index <= end:
         try:
-            y_values.append(all_y_values[index])
+            y_values.append(float(all_y_values[index]))
             index += 1
         except IndexError:
             print(
@@ -26,9 +28,16 @@ def plot_single_file(file):
             break
     for time in range(start, index):
         x_values.append(time)
-    print(x_values)
-    print(y_values)
-    plt.scatter(x_values, y_values)
-    plt.show()
+    plot_with_linear_fit(x_values, y_values)
 
-# note that erorrs can be made due to incorrect data files (data from certain seconds missing from file).
+
+# note that errors can occur due to incorrect data files (data from certain seconds missing from file).
+
+
+def plot_with_linear_fit(x_array, y_array):
+    x = np.array(x_array)
+    y = np.array(y_array)
+    m, b = np.polyfit(x, y, 1)
+    plt.scatter(x_array, y_array, s=10)
+    plt.plot(x, m * x + b)
+    plt.show()
