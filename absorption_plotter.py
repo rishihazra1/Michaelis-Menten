@@ -4,14 +4,26 @@ import file_interpretation
 start_time = int()
 end_time = int()
 
-def produce_scatter_plot(start_time, end_time):
 
-
-def plot_single_file(file, start, end, concentrations):
-    x_values = concentrations
+def plot_single_file(file, start, end):
+    first_column, second_column = file_interpretation.read_file(file)
+    all_y_values = file_interpretation.initialize_array(first_column, second_column)
+    x_values = []
     y_values = []
-    for temp_time in range(start, end + 1):
-        y_values.append(file_interpretation.get_absorption(file, temp_time))
+    index = start
+    while index <= end:
+        try:
+            y_values.append(all_y_values[index])
+            index += 1
+        except IndexError:
+            print(
+                "Index Error. Data point(s) are missing in given file. Plot will be truncated to the length of your data set. ")
+            break
+    for time in range(start, index):
+        x_values.append(time)
+    print(x_values)
+    print(y_values)
     plt.scatter(x_values, y_values)
     plt.show()
 
+# note that erorrs can be made due to incorrect data files (data from certain seconds missing from file).

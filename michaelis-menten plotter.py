@@ -37,8 +37,7 @@ for i in range(0, len(trial_concentrations)):
     m = 1
     while m < number_of_trials[i] + 1:
         print("Select file with data for Trial " + str(m) + " at " + trial_concentrations[i] + " µM.\n")
-        path = tkinter.filedialog.askopenfilename()
-        print(path)
+        file_interpretation.request_file()
         first_column, second_column = file_interpretation.read_file(path)
         x_values = file_interpretation.initialize_array(first_column, second_column)
         start_value = file_interpretation.get_absorption(x_values, start_time)

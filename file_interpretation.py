@@ -1,6 +1,13 @@
 import csv
+import tkinter.filedialog
 
 absorption_values = []
+
+
+def request_file():
+    path = tkinter.filedialog.askopenfilename()
+    print(path)
+    return path
 
 
 def read_file(csv_file):
@@ -42,17 +49,14 @@ def initialize_array(time_column, absorption_column):
 
 def get_absorption(x_value_array, time_stamp):
     index_valid = False
-    input_time = time_stamp
     while index_valid is False:
         try:
             instantaneous_absorption = x_value_array[time_stamp]
             index_valid = True
         except IndexError:
-            print("Index Error. Data point(s) are missing in given file. Final time will be truncated by 1 second. "
-                  "Please verify trial actually ran for " + str(input_time) + " seconds.")
+            print("Index Error. Data point(s) are missing in given file. Final time will be truncated by 1 second. ")
             index_valid = False
             time_stamp -= 1
-    print("(time (sec), absorption): " + "(" + str(time_stamp) + "," + str(instantaneous_absorption) + ")")
     return instantaneous_absorption
 
 
