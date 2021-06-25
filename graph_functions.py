@@ -21,31 +21,29 @@ def plot_single_file(file):
                 "Index Error. Data point(s) are missing in given file. Plot will be truncated to the length of your "
                 "data set. ")
             break
+    print("y-values: " + str(y_values))
     for time in range(start, index):
         x_values.append(time)
-    plot_with_linear_fit(x_values, y_values)
+    print("x-values: " + str(x_values))
+    x_numpy, y_numpy = convert_to_numpy_array(x_values, y_values)
+    plt.scatter(x_numpy, y_numpy, s=10)
+    slope, intercept, r_squared = find_linear_fit(x_values, y_values)
+    plt.plot(x_values, slope * x_numpy + intercept)
+    plt.show()
 
 
 # note that errors can occur due to incorrect data files (data from certain seconds missing from file).
 
-def plot_with_linear_fit(x_array, y_array):
-    x, y = convert_to_np_array(x_array, y_array)
-    m, b = np.poly.fit(x, y, 1)
-    plt.scatter(x_array, y_array, s=10)
-    plt.plot(x, m * x + b)
-    plt.show()
-    print("Plot opened in alternate window.")
-
-
-def get_r_squared(x_array, y_array):
-    x, y = convert_to_np_array(x_array, y_array)
-    res = stats.linregress(x, y)
-    r_squared = float(res.rvalue) ** 2
+def find_linear_fit(x_array, y_array):
+    slope, intercept, r, p, se = stats.linregress(x_array, y_array)
+    r_squared = float(r) ** 2
     print(f"r_squared: {r_squared}")
-    return r_squared
+    print(str(slope) + ", " + str(intercept))
+    print("Plot opened in alternate window.")
+    return slope, intercept, r_squared
 
 
-def convert_to_np_array(x_array, y_array):
-    x = np.array(x_array)
-    y = np.array(y_array)
-    return x, y
+def convert_to_numpy_array(x_array, y_array):
+    x_numpy = np.array(x_array)
+    y_numpy = np.array(y_array)
+    return x_numpy, y_numpy
