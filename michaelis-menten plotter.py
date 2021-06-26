@@ -57,4 +57,5 @@ for i in range(0, len(trial_concentrations)):
     concentration_velocity_average = velocity_sum / (m - 1)
     average_velocities.append(concentration_velocity_average)
 print("Average Velocities: " + str(average_velocities))
-graph_functions.plot_with_linear_fit(trial_concentrations, average_velocities)
+graph_functions.plot_from_arrays(trial_concentrations, average_velocities)
+

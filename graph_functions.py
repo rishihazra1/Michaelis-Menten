@@ -25,25 +25,27 @@ def plot_single_file(file):
     for time in range(start, index):
         x_values.append(time)
     print("x-values: " + str(x_values))
-    x_numpy, y_numpy = convert_to_numpy_array(x_values, y_values)
+    x_numpy, y_numpy = other_functions.convert_to_numpy_float(x_values, y_values)
     plt.scatter(x_numpy, y_numpy, s=10)
-    slope, intercept, r_squared = find_linear_fit(x_values, y_values)
-    plt.plot(x_values, slope * x_numpy + intercept)
-    plt.show()
+    plt.plot()
+    plot_best_fit_line(x_numpy, y_numpy)
+
+
+def plot_from_arrays(x_array, y_array):
+    print(x_array, y_array)
+    x_numpy, y_numpy = other_functions.convert_to_numpy_float(x_array, y_array)
+    plt.scatter(x_numpy, y_numpy, s=10)
+    plot_best_fit_line(x_numpy, y_numpy)
 
 
 # note that errors can occur due to incorrect data files (data from certain seconds missing from file).
 
-def find_linear_fit(x_array, y_array):
-    slope, intercept, r, p, se = stats.linregress(x_array, y_array)
-    r_squared = float(r) ** 2
+def plot_best_fit_line(x_numpy, y_numpy):
+    result = stats.linregress(x_numpy, y_numpy)
+    r_squared = float(result.rvalue) ** 2
     print(f"r_squared: {r_squared}")
-    print(str(slope) + ", " + str(intercept))
+    print(str(result.slope) + ", " + str(result.intercept))
+    plt.plot(x_numpy, result.intercept + result.slope * x_numpy)
+    plt.show()
     print("Plot opened in alternate window.")
-    return slope, intercept, r_squared
-
-
-def convert_to_numpy_array(x_array, y_array):
-    x_numpy = np.array(x_array)
-    y_numpy = np.array(y_array)
-    return x_numpy, y_numpy
+    return result, r_squared

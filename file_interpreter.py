@@ -42,7 +42,7 @@ def initialize_array(time_column, absorption_column):
             end_index = index - 2
             break
     for time in range(zero_index, end_index + 1):
-        data_points.append(absorption_column[time])
+        data_points.append(float(absorption_column[time]))
     print(data_points)
     return data_points
 

@@ -1,3 +1,6 @@
+import numpy as np
+
+
 def get_time_bounds(data_set):
     input_valid = False
     while input_valid is False:
@@ -36,3 +39,23 @@ def time_bound_input_checker():
                 print("Input not recognized. Please enter yes or no.")
                 input_valid_overall = False
     return yes_or_no_individual, yes_or_no_overall
+
+
+def convert_to_numpy_float(x_array, y_array):
+    x_numpy = np.array(x_array).astype(np.float64)
+    y_numpy = np.array(y_array).astype(np.float64)
+    return x_numpy, y_numpy
+
+
+def convert_to_numpy_array(x_array, y_array):
+    x_numpy = np.array(x_array)
+    y_numpy = np.array(y_array)
+    return x_numpy, y_numpy
+
+
+def get_predicted_y(x_numpy, slope, intercept):
+    print(x_numpy)
+    predicted_y = []
+    for i in range(0, len(x_numpy)):
+        predicted_y.append((x_numpy[i] * slope) + intercept)
+    return predicted_y
