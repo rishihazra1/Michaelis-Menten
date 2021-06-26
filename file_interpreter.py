@@ -34,17 +34,22 @@ def read_file(csv_file):
 
 
 def initialize_array(time_column, absorption_column):
-    data_points = []
+    x_values = []
+    y_values = []
     for index in range(0, len(time_column)):
         if time_column[index] == "HH:MM:SS":
             zero_index = index + 1  # identifying desired data start location
         if time_column[index] == "ID#":
             end_index = index - 2
             break
+    t = 0
     for time in range(zero_index, end_index + 1):
-        data_points.append(float(absorption_column[time]))
-    print(data_points)
-    return data_points
+        x_values.append(float(absorption_column[time]))
+        y_values.append(t)
+        t += 1
+    print("x_values: " + str(x_values))
+    print("y_values: " + str(y_values))
+    return x_values, y_values
 
 
 def get_absorption(x_value_array, time_stamp):

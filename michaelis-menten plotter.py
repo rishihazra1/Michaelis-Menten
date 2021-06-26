@@ -35,13 +35,14 @@ for i in range(0, len(trial_concentrations)):
         print("Select file with data for Trial " + str(m) + " at " + trial_concentrations[i] + " µM.\n")
         path = file_interpreter.request_file()
         first_column, second_column = file_interpreter.read_file(path)
-        x_values = file_interpreter.initialize_array(first_column, second_column)
+        x_values, y_values = file_interpreter.initialize_array(first_column, second_column)
         if yes_or_no_individual == "yes":
             start_time, end_time = other_functions.get_time_bounds(x_values)
             need_time_bounds = False
         if need_time_bounds is True:
-            start_time = 0
-            end_time = len(path) - 1
+            start_time, end_time = graph_functions.find_best_bounds(x_values, y_values)
+ #           start_time = 0
+ #           end_time = len(path) - 1
         start_value = file_interpreter.get_absorption(x_values, start_time)
         end_value = file_interpreter.get_absorption(x_values, end_time)
         velocity = abs(
