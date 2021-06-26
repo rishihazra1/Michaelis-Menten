@@ -41,10 +41,9 @@ for i in range(0, len(trial_concentrations)):
             need_time_bounds = False
         if need_time_bounds is True:
             start_time, end_time = graph_functions.find_best_bounds(x_values, y_values)
- #           start_time = 0
- #           end_time = len(path) - 1
-        start_value = file_interpreter.get_absorption(x_values, start_time)
-        end_value = file_interpreter.get_absorption(x_values, end_time)
+            print("bounds: " + str(start_time) + ", " + str(end_time))
+        start_value = file_interpreter.get_absorption(y_values, start_time)
+        end_value = file_interpreter.get_absorption(y_values, end_time)
         velocity = abs(
             file_interpreter.find_velocity(start_value, start_time, end_value, end_time, enzyme_concentration,
                                            molar_extinction))

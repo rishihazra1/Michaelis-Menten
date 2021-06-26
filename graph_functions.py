@@ -7,25 +7,27 @@ import other_functions
 
 def plot_single_file(file):
     first_column, second_column = file_interpreter.read_file(file)
-    all_y_values = file_interpreter.initialize_array(first_column, second_column)
-    x_values = []
-    y_values = []
+    all_x_values, all_y_values = file_interpreter.initialize_array(first_column, second_column)
+    print(all_x_values)
+    print(all_y_values)
+    desired_x_values = []
+    desired_y_values = []
     start, end = other_functions.get_time_bounds(all_y_values)
     index = start
     while index <= end:
         try:
-            y_values.append(float(all_y_values[index]))
+            desired_y_values.append(float(all_y_values[index]))
             index += 1
         except IndexError:
             print(
                 "Index Error. Data point(s) are missing in given file. Plot will be truncated to the length of your "
                 "data set. ")
             break
-    print("y-values: " + str(y_values))
+    print("y-values: " + str(desired_y_values))
     for time in range(start, index):
-        x_values.append(time)
-    print("x-values: " + str(x_values))
-    x_numpy, y_numpy = other_functions.convert_to_numpy_float(x_values, y_values)
+        desired_x_values.append(time)
+    print("x-values: " + str(desired_x_values))
+    x_numpy, y_numpy = other_functions.convert_to_numpy_float(desired_x_values, desired_y_values)
     plt.scatter(x_numpy, y_numpy, s=10)
     plt.plot()
     plot_best_fit_line(x_numpy, y_numpy)
@@ -61,7 +63,7 @@ def find_best_bounds(x_values, y_values):
     start_index = 0
     end_index = len(x_values) - 1
     max_r_squared = 0
-    max_bounds = [0, 45, "ERROR: reverted to full plot"]
+    max_bounds = [0, len(x_values) - 1, "ERROR: reverted to full plot"]
     for start_index in range(0, len(x_values) - 15):
         for end_index in range(start_index + 15, len(x_values)):
             new_x_values = []

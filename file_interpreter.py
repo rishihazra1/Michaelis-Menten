@@ -44,19 +44,19 @@ def initialize_array(time_column, absorption_column):
             break
     t = 0
     for time in range(zero_index, end_index + 1):
-        x_values.append(float(absorption_column[time]))
-        y_values.append(t)
+        y_values.append(float(absorption_column[time]))
+        x_values.append(t)
         t += 1
     print("x_values: " + str(x_values))
     print("y_values: " + str(y_values))
     return x_values, y_values
 
 
-def get_absorption(x_value_array, time_stamp):
+def get_absorption(y_value_array, time_stamp):
     index_valid = False
     while index_valid is False:
         try:
-            instantaneous_absorption = x_value_array[time_stamp]
+            instantaneous_absorption = y_value_array[time_stamp]
             index_valid = True
         except IndexError:
             print("Index Error. Data point(s) are missing in given file. Final time will be truncated by 1 second. ")
