@@ -1,15 +1,14 @@
 import matplotlib.pyplot as plt
-import file_interpreter
 import numpy as np
+import file_interpreter
 from scipy import stats
+import scipy.optimize
 import other_functions
 
 
 def plot_single_file(file):
     first_column, second_column = file_interpreter.read_file(file)
     all_x_values, all_y_values = file_interpreter.initialize_array(first_column, second_column)
-    print(all_x_values)
-    print(all_y_values)
     desired_x_values = []
     desired_y_values = []
     start, end = other_functions.get_time_bounds(all_y_values)
@@ -42,6 +41,26 @@ def plot_from_arrays(x_array, y_array):
 
 # note that errors can occur due to incorrect data files (data from certain seconds missing from file).
 
+"""
+def rational(x, p, q):
+    return np.polyval(p, x) / np.polyval(q + [1.0], x)
+
+
+
+def plot_rational_function_fit(x_numpy, y_numpy):
+    plt.plot(x_numpy, y_numpy, 'b-', label='data')
+    rng = np.random.default_rng()
+    y_noise = 0.2 * rng.normal(size=x_numpy.size)
+    y_predicted = rational(x_numpy, 2.5, 1.3) + y_noise
+    popt, pcov = scipy.optimize.curve_fit(rational, x_numpy, y_predicted)
+    plt.plot(x_numpy, rational(x_numpy, *popt), 'r-', label='fit: a=%5.3f, b=%5.3f, c=%5.3f' % tuple(popt))
+    popt, pcov = scipy.optimize.curve_fit(rational, x_numpy, y_predicted, bounds=(0, [3., 1., 0.5]))
+    plt.plot(x_numpy, rational(x_numpy, *popt), 'g--', label='fit: a=%5.3f, b=%5.3f, c=%5.3f' % tuple(popt))
+    plt.show()
+    print("In Progress")
+"""
+
+
 def plot_best_fit_line(x_numpy, y_numpy):
     result = stats.linregress(x_numpy, y_numpy)
     r_squared = float(result.rvalue) ** 2
@@ -60,8 +79,6 @@ def get_r_squared(x_numpy, y_numpy):
 
 
 def find_best_bounds(x_values, y_values):
-    start_index = 0
-    end_index = len(x_values) - 1
     max_r_squared = 0
     max_bounds = [0, len(x_values) - 1, "ERROR: reverted to full plot"]
     for start_index in range(0, len(x_values) - 15):
@@ -86,4 +103,3 @@ def find_best_bounds(x_values, y_values):
                 print("New max at: " + str(max_bounds))
     print(max_bounds)
     return max_bounds[0], max_bounds[1]
-

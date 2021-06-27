@@ -1,5 +1,3 @@
-import tkinter.filedialog
-import matplotlib.pyplot as plt
 import other_functions
 import graph_functions
 import file_interpreter
@@ -58,4 +56,3 @@ for i in range(0, len(trial_concentrations)):
     average_velocities.append(concentration_velocity_average)
 print("Average Velocities: " + str(average_velocities))
 graph_functions.plot_from_arrays(trial_concentrations, average_velocities)
-
