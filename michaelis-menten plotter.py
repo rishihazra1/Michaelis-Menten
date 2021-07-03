@@ -5,11 +5,10 @@ import data_tracker
 
 molar_extinction = float(input("Enter molar extinction coefficient of your substrate.\n"))
 enzyme_concentration = float(input("Enter concentration of your enzyme (in µM).\n"))
-input_valid = False
-while input_valid is False:
+while True:
     use_data_tracker = input("Would you like to use the in-built data tracker? (yes/no)\n")
     if use_data_tracker == "yes" or use_data_tracker == "no":
-        input_valid = True
+        break
     else:
         print("Input not recognized. Enter yes or no.")
 trial_concentrations = []

@@ -2,8 +2,8 @@ def track_data():
     concentrations = []
     trials_per_concentration = []
     data = []
-    while True:
-        while True:
+    while True:  # terminates when there are no more concentrations
+        while True:  # terminates with valid user input
             next_occurrence = input("Enter the current substrate concentration. Enter 'no' to exit "
                                     "loop.\n")
             if next_occurrence == "no":
@@ -16,7 +16,7 @@ def track_data():
         if next_occurrence == "no":
             break
         current_trial = 0
-        while True:
+        while True:  # terminates when there are no more trials for current concentration
             current_trial += 1
             next_trial_input = input("Enter data for Trial " + str(current_trial) + " at " + str(
                 next_occurrence) + ". Enter 'no' to exit loop.\n")
@@ -31,4 +31,3 @@ def track_data():
     print("Data stored in csv file *insert file path here*.")
     return concentrations, trials_per_concentration  # eventually, return path of csv file instead
 
-track_data()

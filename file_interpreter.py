@@ -53,14 +53,12 @@ def initialize_array(time_column, absorption_column):
 
 
 def get_absorption(y_value_array, time_stamp):
-    index_valid = False
-    while index_valid is False:
+    while True:
         try:
             instantaneous_absorption = y_value_array[time_stamp]
-            index_valid = True
+            break
         except IndexError:
             print("Index Error. Data point(s) are missing in given file. Final time will be truncated by 1 second. ")
-            index_valid = False
             time_stamp -= 1
     return instantaneous_absorption
 

@@ -2,42 +2,36 @@ import numpy as np
 
 
 def get_time_bounds(data_set):
-    input_valid = False
-    while input_valid is False:
+    while True:
         yes_or_no = input("Would you like to select a specific range to plot? Enter yes or no.\n")
         if str.lower(yes_or_no) == "no":
             start = 0
             end = len(data_set) - 1
-            input_valid = True
+            break
         elif str.lower(yes_or_no) == "yes":
             start = int(input("Enter your desired start time for the plot.\n"))
             end = int(input("Enter your desired end time for the plot.\n"))
-            input_valid = True
+            break
         else:
             print("Input not recognized. Enter yes or no.")
-            input_valid = False
     return start, end
 
 
 def time_bound_input_checker():
-    input_valid_individual = False
-    input_valid_overall = False
     yes_or_no_overall = "no"
-    while input_valid_individual is False:
+    while True:
         yes_or_no_individual = input("Do you have different desirable time bounds for each file?\n")
         if str.lower(yes_or_no_individual) == "yes" or str.lower(yes_or_no_individual) == "no":
-            input_valid_individual = True
+            break
         else:
             print("Input not recognized. Please enter yes or no.")
-            input_valid_individual = False
     if yes_or_no_individual == "no":
-        while input_valid_overall is False:
+        while True:
             yes_or_no_overall = input("Do you have a default desirable time bound for all files?\n")
             if str.lower(yes_or_no_overall) == "yes" or str.lower(yes_or_no_overall) == "no":
-                input_valid_overall = True
+                break
             else:
                 print("Input not recognized. Please enter yes or no.")
-                input_valid_overall = False
     return yes_or_no_individual, yes_or_no_overall
 
 
