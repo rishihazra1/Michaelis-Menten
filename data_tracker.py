@@ -9,9 +9,9 @@ def track_data():
             if next_occurrence == "no":
                 break
             try:
-                concentrations.append(next_occurrence)
+                concentrations.append(float(next_occurrence))
                 break
-            except TypeError:
+            except ValueError:
                 print("Input not recognized. Enter the concentration or enter 'no' to exit loop.")
         if next_occurrence == "no":
             break
