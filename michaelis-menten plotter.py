@@ -1,21 +1,38 @@
 import other_functions
 import graph_functions
 import file_interpreter
+import data_tracker
 
-molar_extinction = float(input("Enter molar extinction coefficient of your substrate.\n"))
-enzyme_concentration = float(input("Enter concentration of your enzyme (in µM).\n"))
-concentrations_run = int(input("How many concentrations did you run trials for?\n"))
-
+while True:
+    try:
+        molar_extinction = float(input("Enter molar extinction coefficient of your substrate.\n"))
+        break
+    except ValueError:
+        print("Input not recognized. Enter the float value.")
+while True:
+    try:
+        enzyme_concentration = float(input("Enter concentration of your enzyme (in µM).\n"))
+        break
+    except ValueError:
+        print("Input not recognized. Enter the float value.")
+while True:
+    use_data_tracker = input("Would you like to use the in-built data tracker? (yes/no)\n")
+    if use_data_tracker == "yes" or use_data_tracker == "no":
+        break
+    else:
+        print("Input not recognized. Enter yes or no.")
 trial_concentrations = []
-print("Enter the concentrations (in µM) at which you ran trials. Press enter after each value.")
-for t in range(0, concentrations_run):
-    trial_concentrations.append(input())
-print(trial_concentrations)
-
 number_of_trials = []
-for n in range(0, len(trial_concentrations)):
-    number_of_trials.append(int(input("How many trials did you run at  " + trial_concentrations[n] + " µM\n")))
-
+if use_data_tracker == "no":
+    concentrations_run = int(input("How many concentrations did you run trials for?\n"))
+    print("Enter the concentrations (in µM) at which you ran trials. Press enter after each value.")
+    for t in range(0, concentrations_run):
+        trial_concentrations.append(input())
+    print(trial_concentrations)
+    for n in range(0, len(trial_concentrations)):
+        number_of_trials.append(int(input("How many trials did you run at  " + trial_concentrations[n] + " µM\n")))
+else:
+    trial_concentrations, number_of_trials, trial_validity = data_tracker.track_data()
 yes_or_no_individual, yes_or_no_overall = other_functions.time_bound_input_checker()
 need_time_bounds = True
 if yes_or_no_overall == "yes":
@@ -24,13 +41,12 @@ if yes_or_no_overall == "yes":
     need_time_bounds = False
 elif yes_or_no_individual == "yes":
     need_time_bounds = False
-
 average_velocities = []
 for i in range(0, len(trial_concentrations)):
     temp_value_holder = []  # stores individual trial values per concentration; resets each iteration
     m = 1
     while m < number_of_trials[i] + 1:
-        print("Select file with data for Trial " + str(m) + " at " + trial_concentrations[i] + " µM.\n")
+        print("Select file with data for Trial " + str(m) + " at " + str(trial_concentrations[i]) + " µM.\n")
         path = file_interpreter.request_file()
         first_column, second_column = file_interpreter.read_file(path)
         x_values, y_values = file_interpreter.initialize_array(first_column, second_column)
@@ -56,3 +72,4 @@ for i in range(0, len(trial_concentrations)):
     average_velocities.append(concentration_velocity_average)
 print("Average Velocities: " + str(average_velocities))
 graph_functions.plot_from_arrays(trial_concentrations, average_velocities)
+
