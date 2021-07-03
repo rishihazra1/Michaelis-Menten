@@ -1,8 +1,9 @@
 import matplotlib.pyplot as plt
+import matplotlib.axes as ax
 import numpy as np
 import file_interpreter
 from scipy import stats
-import scipy.optimize
+from scipy.optimize import curve_fit
 import other_functions
 
 
@@ -41,25 +42,20 @@ def plot_from_arrays(x_array, y_array):
 
 # note that errors can occur due to incorrect data files (data from certain seconds missing from file).
 
-"""
-def rational(x, p, q):
-    return np.polyval(p, x) / np.polyval(q + [1.0], x)
+def rational(x, Vmax, Km):
+    return (Vmax * x) / (Km + x)
 
 
-
-def plot_rational_function_fit(x_numpy, y_numpy):
-    plt.plot(x_numpy, y_numpy, 'b-', label='data')
-    rng = np.random.default_rng()
-    y_noise = 0.2 * rng.normal(size=x_numpy.size)
-    y_predicted = rational(x_numpy, 2.5, 1.3) + y_noise
-    popt, pcov = scipy.optimize.curve_fit(rational, x_numpy, y_predicted)
-    plt.plot(x_numpy, rational(x_numpy, *popt), 'r-', label='fit: a=%5.3f, b=%5.3f, c=%5.3f' % tuple(popt))
-    popt, pcov = scipy.optimize.curve_fit(rational, x_numpy, y_predicted, bounds=(0, [3., 1., 0.5]))
-    plt.plot(x_numpy, rational(x_numpy, *popt), 'g--', label='fit: a=%5.3f, b=%5.3f, c=%5.3f' % tuple(popt))
+def plot_michaelis_menten_fit():
+    x_dummy = np.linspace(start=0, stop=100, num=200)
+    y_dummy = rational(x_dummy, 0.5, 0.5)
+    noise = 5 * np.random.normal(size=y_dummy.size)
+    y_dummy = y_dummy + noise
+    ax.Axes.scatter(x_dummy, y_dummy, s=20, color='#00b3b3', label='Dummy Data')
     plt.show()
     print("In Progress")
-"""
 
+"""
 
 def plot_best_fit_line(x_numpy, y_numpy):
     result = stats.linregress(x_numpy, y_numpy)
@@ -71,7 +67,7 @@ def plot_best_fit_line(x_numpy, y_numpy):
     print("Plot opened in alternate window.")
     return result, r_squared
 
-
+"""
 def get_r_squared(x_numpy, y_numpy):
     result = stats.linregress(x_numpy, y_numpy)
     r_squared = float(result.rvalue) ** 2
