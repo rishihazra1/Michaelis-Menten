@@ -1,30 +1,29 @@
-import csv
-
-
 def track_data():
     continue_running = True
     concentrations = []
     trials_per_concentration = []
     data = []
     while continue_running is True:
-        concentration_valid = True
-        while concentration_valid is True:
+        concentration_valid = False
+        while concentration_valid is False:
             next_occurrence = input("Enter the current substrate concentration. Enter 'no' to exit "
                                     "loop.\n")
             if next_occurrence == "no":
-                concentration_valid = False
-            elif next_occurrence is type(float):  # not working properly
-                concentrations.append(next_occurrence)
+                concentration_valid = True
             else:
-                print("Input not recognized. Enter the concentration or enter 'no' to exit loop.")
+                try:
+                    concentrations.append(next_occurrence)
+                    concentration_valid = True
+                except TypeError:
+                    print("Input not recognized. Enter the concentration or enter 'no' to exit loop.")
+                    concentration_valid = False
+                    break
         current_trial = 0
         are_more_trials = True
-        current_concentration = input("Please enter the current concentration of substrate (in µM).\n")
-        concentrations.append(current_concentration)
         while are_more_trials is True:
             current_trial += 1
             next_trial_input = input("Enter data for Trial " + str(current_trial) + " at " + str(
-                current_concentration) + ". Enter 'no' to exit loop.\n")
+                next_occurrence) + ". Enter 'no' to exit loop.\n")
             if next_trial_input == "no":
                 current_trial -= 1
                 are_more_trials = False
@@ -35,3 +34,5 @@ def track_data():
     print("trials_per_concentration: " + str(trials_per_concentration))
     print("Data stored in csv file *insert file path here*.")
     return concentrations, trials_per_concentration  # eventually, return path of csv file instead
+
+track_data()
