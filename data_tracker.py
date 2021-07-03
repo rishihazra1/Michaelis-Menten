@@ -1,32 +1,28 @@
 def track_data():
-    continue_running = True
     concentrations = []
     trials_per_concentration = []
     data = []
-    while continue_running is True:
-        concentration_valid = False
-        while concentration_valid is False:
+    while True:
+        while True:
             next_occurrence = input("Enter the current substrate concentration. Enter 'no' to exit "
                                     "loop.\n")
             if next_occurrence == "no":
-                concentration_valid = True
-            else:
-                try:
-                    concentrations.append(next_occurrence)
-                    concentration_valid = True
-                except TypeError:
-                    print("Input not recognized. Enter the concentration or enter 'no' to exit loop.")
-                    concentration_valid = False
-                    break
+                break
+            try:
+                concentrations.append(next_occurrence)
+                break
+            except TypeError:
+                print("Input not recognized. Enter the concentration or enter 'no' to exit loop.")
+        if next_occurrence == "no":
+            break
         current_trial = 0
-        are_more_trials = True
-        while are_more_trials is True:
+        while True:
             current_trial += 1
             next_trial_input = input("Enter data for Trial " + str(current_trial) + " at " + str(
                 next_occurrence) + ". Enter 'no' to exit loop.\n")
             if next_trial_input == "no":
                 current_trial -= 1
-                are_more_trials = False
+                break
             else:
                 data.append(next_trial_input)
         trials_per_concentration.append(current_trial)
