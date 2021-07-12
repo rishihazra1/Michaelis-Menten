@@ -1,3 +1,5 @@
+import graph_functions
+
 def track_data():
     concentrations = []
     trials_per_concentration = []
@@ -26,14 +28,14 @@ def track_data():
                     current_trial -= 1
                     break
                 try:
-                    data.append(float(next_trial_input))
+                    data.append(float(next_trial_input))x`
                     break
                 except ValueError:
                     print("Input not recognized. Enter the data value or enter 'no' to exit loop.")
             if next_trial_input == "no":
                 break
             while True:  # terminates when user input for trial_validity is valid
-                keep_trial = input("Would you like to keep the data for " + str(current_trial) + " ? (yes/no)\n")
+                keep_trial = input("Would you like to keep the data for Trial " + str(current_trial) + " ? (yes/no)\n")
                 if keep_trial == "yes":
                     trial_validity.append(True)
                     break
