@@ -30,7 +30,7 @@ def track_data():
                     current_trial -= 1
                     break
                 try:
-                    data.append(float(next_trial_input))x`
+                    data.append(float(next_trial_input))
                     break
                 except ValueError:
                     print("Input not recognized. Enter the data value or enter 'no' to exit loop.")
