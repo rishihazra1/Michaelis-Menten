@@ -1,7 +1,5 @@
-import other_functions
-import graph_functions
+import data_analysis
 import file_interpreter
-import data_tracker
 
 while True:
     try:
@@ -32,8 +30,8 @@ if use_data_tracker == "no":
     for n in range(0, len(trial_concentrations)):
         number_of_trials.append(int(input("How many trials did you run at  " + trial_concentrations[n] + " µM\n")))
 else:
-    trial_concentrations, number_of_trials, trial_validity = data_tracker.track_data()
-yes_or_no_individual, yes_or_no_overall = other_functions.time_bound_input_checker()
+    trial_concentrations, number_of_trials, trial_validity = data_analysis.track_data()
+yes_or_no_individual, yes_or_no_overall = data_analysis.time_bound_input_checker()
 need_time_bounds = True
 if yes_or_no_overall == "yes":
     start_time = int(input("Enter your desired default start_time.\n"))
@@ -51,10 +49,10 @@ for i in range(0, len(trial_concentrations)):
         first_column, second_column = file_interpreter.read_file(path)
         x_values, y_values = file_interpreter.initialize_array(first_column, second_column)
         if yes_or_no_individual == "yes":
-            start_time, end_time = other_functions.get_time_bounds(x_values)
+            start_time, end_time = data_analysis.get_time_bounds(x_values)
             need_time_bounds = False
         if need_time_bounds is True:
-            start_time, end_time = graph_functions.find_best_bounds(x_values, y_values)
+            start_time, end_time = data_analysis.find_best_bounds(x_values, y_values)
             print("bounds: " + str(start_time) + ", " + str(end_time))
         start_value = file_interpreter.get_absorption(y_values, start_time)
         end_value = file_interpreter.get_absorption(y_values, end_time)
@@ -71,5 +69,4 @@ for i in range(0, len(trial_concentrations)):
     concentration_velocity_average = velocity_sum / (m - 1)
     average_velocities.append(concentration_velocity_average)
 print("Average Velocities: " + str(average_velocities))
-graph_functions.plot_from_arrays(trial_concentrations, average_velocities)
-
+data_analysis.plot_from_arrays(trial_concentrations, average_velocities)
