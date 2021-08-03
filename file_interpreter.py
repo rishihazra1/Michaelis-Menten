@@ -1,16 +1,20 @@
 from csv import reader
 import tkinter.filedialog
+import pandas as pd
 
 absorption_values = []
 
 
 def request_file():
-    path = tkinter.filedialog.askopenfilename()
+    path = tkinter.filedialog.askopenfilename(initialdir="/", title="Select file.", filetypes=(("CSV Files", "*.csv*"), ("All Files", "*.*")))
     print(path)
     return path
 
 
 def read_file(csv_file):
+    df = pd.read_csv(csv_file)
+    numpy_array = pd.df.to_numpy()
+    print(numpy_array)
     rows = []
     first_column = []
     second_column = []
