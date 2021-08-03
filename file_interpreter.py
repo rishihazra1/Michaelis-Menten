@@ -6,13 +6,15 @@ absorption_values = []
 
 
 def request_file():
-    path = fd.askopenfilenames(initialdir='C:/Users/hazra/Dropbox/Rishi/Shared/WSU BXRC Research 2021/Proteins', title="Select file.", filetypes=(("CSV Files", "*.csv*"), ("All Files", "*.*")))
+    path = fd.askopenfilename(initialdir='C:/Users/hazra/Dropbox/Rishi/Shared/WSU BXRC Research 2021/Proteins', title="Select file.", filetypes=(("CSV Files", "*.csv*"), ("All Files", "*.*")))
     print(path)
     return path
 
 
 def read_file(csv_file):
+    print("csv_file: " + csv_file)
     df = pd.read_csv(csv_file)
+    print("data_frame " + df)
     numpy_array = pd.df.to_numpy()
     print(numpy_array)
     rows = []
