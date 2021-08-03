@@ -1,7 +1,7 @@
-import matplotlib.pyplot as plt
-import numpy as np
+from matplotlib.pyplot import scatter, show, plot
+from numpy import array, float64
+from scipy.stats import linregress
 import file_interpreter
-from scipy import stats
 
 # functions below originally from other_functions.py
 
@@ -40,14 +40,14 @@ def time_bound_input_checker():
 
 
 def convert_to_numpy_float(x_array, y_array):
-    x_numpy = np.array(x_array).astype(np.float64)
-    y_numpy = np.array(y_array).astype(np.float64)
+    x_numpy = array(x_array).astype(float64)
+    y_numpy = array(y_array).astype(float64)
     return x_numpy, y_numpy
 
 
 def convert_to_numpy_array(x_array, y_array):
-    x_numpy = np.array(x_array)
-    y_numpy = np.array(y_array)
+    x_numpy = array(x_array)
+    y_numpy = array(y_array)
     return x_numpy, y_numpy
 
 
@@ -84,31 +84,31 @@ def plot_single_file(file):
         desired_x_values.append(time)
     print("x-values: " + str(desired_x_values))
     x_numpy, y_numpy = convert_to_numpy_float(desired_x_values, desired_y_values)
-    plt.scatter(x_numpy, y_numpy, s=10)
-    plt.plot()
+    scatter(x_numpy, y_numpy, s=10)
+    plot()
     plot_best_fit_line(x_numpy, y_numpy)
 
 
 def plot_from_arrays(x_array, y_array):  # note that errors can occur due to incorrect data files (data from certain seconds missing from file).
     print(x_array, y_array)
     x_numpy, y_numpy = convert_to_numpy_float(x_array, y_array)
-    plt.scatter(x_numpy, y_numpy, s=10)
+    scatter(x_numpy, y_numpy, s=10)
     plot_best_fit_line(x_numpy, y_numpy)
 
 
 def plot_best_fit_line(x_numpy, y_numpy):
-    result = stats.linregress(x_numpy, y_numpy)
+    result = linregress(x_numpy, y_numpy)
     r_squared = float(result.rvalue) ** 2
     print(f"r_squared: {r_squared}")
     print(str(result.slope) + ", " + str(result.intercept))
-    plt.plot(x_numpy, result.intercept + result.slope * x_numpy)
-    plt.show()
+    plot(x_numpy, result.intercept + result.slope * x_numpy)
+    show()
     print("Plot opened in alternate window.")
     return result, r_squared
 
 
 def get_r_squared(x_numpy, y_numpy):
-    result = stats.linregress(x_numpy, y_numpy)
+    result = linregress(x_numpy, y_numpy)
     r_squared = float(result.rvalue) ** 2
     return r_squared
 

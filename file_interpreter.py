@@ -1,11 +1,11 @@
-from csv import reader
-import tkinter.filedialog as fd
+from tkinter.filedialog import askopenfilename
+
 
 absorption_values = []
 
 
 def request_file():
-    path = fd.askopenfilename(title="Select file.", filetypes=(("CSV Files", "*.csv*"), ("All Files", "*.*")))
+    path = askopenfilename(title="Select file.", filetypes=(("CSV Files", "*.csv*"), ("All Files", "*.*")))
     print(path)
     return path
 
