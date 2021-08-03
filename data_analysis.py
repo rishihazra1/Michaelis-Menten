@@ -2,6 +2,7 @@ import matplotlib.pyplot as plt
 import numpy as np
 import file_interpreter
 import scipy 
+import os
 # functions below originally from other_functions.py
 
 def get_time_bounds(data_set):
@@ -212,8 +213,8 @@ def track_data():
         except PermissionError:
             print("Insufficient permissions. Storing in local directory instead.\n Enter desired file name.")
             file_name = str(input()) + ".csv"
-            file_location = "C:/Users/hazra/Documents/GitHub/Michaelis-Menten/" + file_name
+            file_location = os.path.join(r"C:\Users\hazra\Documents\GitHub\Michaelis-Menten", file_name)
             file_saved = False
         i += 1
-    print("Stored at " + str(file_location) + ". Ctrl + Click to open.")
+    print("Stored at " + str(file_location) + " Ctrl + Click to open.")
     return file_location  # eventually, return path of csv file instead
