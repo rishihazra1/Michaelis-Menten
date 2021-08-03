@@ -1,12 +1,12 @@
 from csv import reader
-import tkinter.filedialog
+import tkinter.filedialog as fd
 import pandas as pd
 
 absorption_values = []
 
 
 def request_file():
-    path = tkinter.filedialog.askopenfilename(initialdir="/", title="Select file.", filetypes=(("CSV Files", "*.csv*"), ("All Files", "*.*")))
+    path = fd.askopenfilenames(initialdir='C:/Users/hazra/Dropbox/Rishi/Shared/WSU BXRC Research 2021/Proteins', title="Select file.", filetypes=(("CSV Files", "*.csv*"), ("All Files", "*.*")))
     print(path)
     return path
 
