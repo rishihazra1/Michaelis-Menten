@@ -1,6 +1,6 @@
-import graph_functions
+import data_analysis
 import file_interpreter
 
 print("Select the file you wish to plot.")
 path = file_interpreter.request_file()
-graph_functions.plot_single_file(path)
+data_analysis.plot_single_file(path)
