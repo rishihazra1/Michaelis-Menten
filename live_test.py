@@ -1,4 +1,2 @@
-from os import read
-import file_interpreter
-
-path = file_interpreter.request_file()
+from data_analysis import track_data
+track_data()

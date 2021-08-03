@@ -1,8 +1,7 @@
 import matplotlib.pyplot as plt
 import numpy as np
 import file_interpreter
-from scipy import stats
-
+import scipy 
 # functions below originally from other_functions.py
 
 def get_time_bounds(data_set):
@@ -97,7 +96,7 @@ def plot_from_arrays(x_array, y_array):  # note that errors can occur due to inc
 
 
 def plot_best_fit_line(x_numpy, y_numpy):
-    result = stats.linregress(x_numpy, y_numpy)
+    result = scipy.stats.linregress(x_numpy, y_numpy)
     r_squared = float(result.rvalue) ** 2
     print(f"r_squared: {r_squared}")
     print(str(result.slope) + ", " + str(result.intercept))
@@ -108,7 +107,7 @@ def plot_best_fit_line(x_numpy, y_numpy):
 
 
 def get_r_squared(x_numpy, y_numpy):
-    result = stats.linregress(x_numpy, y_numpy)
+    result = scipy.stats.linregress(x_numpy, y_numpy)
     r_squared = float(result.rvalue) ** 2
     return r_squared
 
@@ -195,5 +194,26 @@ def track_data():
             print(all_data)
         trials_per_concentration.append(int(current_trial))
     print("all_data: " + str(all_data))
-    print("Data stored in csv file *insert file path here*.")
-    return concentrations, data, trial_validity  # eventually, return path of csv file instead
+    # writing csv
+    fields = ['Concentration', 'Rate', 'Trial Validity']
+    rows = all_data
+    file_name = file_interpreter.filedialog.askdirectory()
+    file_saved = False
+    i = 1
+    while file_saved is False:
+        try:
+            with open(file_name, 'w') as csvfile:
+                csvwriter = file_interpreter.csv.writer(csvfile)
+                csvwriter.writerow(fields)
+                csvwriter.writerow(rows)
+            file_saved = True
+            if i == 1:
+                file_location = file_name
+        except PermissionError:
+            print("Insufficient permissions. Storing in local directory instead.\n Enter desired file name.")
+            file_name = str(input()) + ".csv"
+            file_location = "C:/Users/hazra/Documents/GitHub/Michaelis-Menten/" + file_name
+            file_saved = False
+        i += 1
+    print("Stored at " + str(file_location) + ". Ctrl + Click to open.")
+    return file_location  # eventually, return path of csv file instead
