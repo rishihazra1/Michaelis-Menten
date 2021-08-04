@@ -1,11 +1,8 @@
-from csv import reader
-import tkinter.filedialog as fd
-
-absorption_values = []
-
+import csv
+from tkinter import filedialog 
 
 def request_file():
-    path = fd.askopenfilename(title="Select file.", filetypes=(("CSV Files", "*.csv*"), ("All Files", "*.*")))
+    path =  filedialog.askopenfilenames(title="Select file.", filetypes=(("CSV Files", "*.csv*"), ("All Files", "*.*")))
     print(path)
     return path
 
@@ -15,7 +12,7 @@ def read_file(csv_file):
     first_column = []
     second_column = []
     with open(csv_file) as current_file:
-        csv_reader = reader(current_file, delimiter=',')
+        csv_reader = csv.reader(current_file, delimiter=',')
         for row in csv_reader:
             rows.append(row)
         index = 0

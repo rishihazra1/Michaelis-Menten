@@ -1,4 +1,3 @@
-from os import read
+from data_analysis import track_data
 import file_interpreter
-
-path = file_interpreter.request_file()
+print(file_interpreter.read_file(input("Enter path")))
